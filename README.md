@@ -45,7 +45,7 @@ airflow scheduler
 **For convenience, these APIs does NOT require any authentication!**
 
 Therefore, if these APIs is directly exposed to the public network environment, it is equivalent to exposing the command
-line execution authority to public, which is a greater security risk.
+line execution authority to public, which is a huge security risk.
 
 So it For safety reasons, please think carefully about whether you need to keep this `@csrf.exempt` annotation.
 
