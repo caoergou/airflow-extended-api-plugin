@@ -1,5 +1,22 @@
 # Airflow 插件 - Airflow 拓展 API
 
+<p align="center">
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/license/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/languages/code-size/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/stars/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/forks/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/watchers/caoergou/airflow-extended-api-plugin"/>
+    </a>
+</p>
 Airflow 扩展 API, 可将 airflow 的命令行包装成 RESTful 风格的 API，以扩展 Airflow 官方 API 的能力。
 
 ## 安装插件
