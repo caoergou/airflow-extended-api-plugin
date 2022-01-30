@@ -1,4 +1,16 @@
 # Airflow Plugin - Airflow Extended API
+<p align="center">
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/license/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/languages/code-size/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/stars/caoergou/airflow-extended-api-plugin"/>
+    </a>
+</p>
+
 
 Airflow Extended API, which
 export [airflow CLI command](https://airflow.apache.org/docs/apache-airflow/2.0.2/cli-and-env-variables-ref.html) as
