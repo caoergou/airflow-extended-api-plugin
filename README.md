@@ -9,6 +9,12 @@
    <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
       <img src="https://img.shields.io/github/stars/caoergou/airflow-extended-api-plugin"/>
     </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/forks/caoergou/airflow-extended-api-plugin"/>
+    </a>
+   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+      <img src="https://img.shields.io/github/watchers/caoergou/airflow-extended-api-plugin"/>
+    </a>
 </p>
 
 
