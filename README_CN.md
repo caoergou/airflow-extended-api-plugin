@@ -136,6 +136,12 @@ curl -X POST https://localhost:8080/api/extended/clear -H "Content-Type: applica
     </a>
 </p>
 
+**TODO**
+
+- [ ] 增加 API 的鉴权能力.
+- [ ] 使得 API 能够自动生成文档.
+- [ ] 提交指 PyPi 仓库使得能够自动下载.
+
 ## 相关链接
 
 - [Airflow 配置文档](https://airflow.apache.org/docs/stable/configurations-ref.html)
