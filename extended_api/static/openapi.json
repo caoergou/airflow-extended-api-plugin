@@ -1,0 +1,190 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Airflow Extended API Doc",
+    "description": "Airflow Extended API, which export airflow CLI command as REST-ful API\nto extend the ability of airflow official API.\n",
+    "contact": {
+      "email": "itsericsmail@gmail.com"
+    },
+    "version": "1.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://airflow-webserver-domin",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Extended API"
+    }
+  ],
+  "paths": {
+    "/api/extended/clear": {
+      "post": {
+        "summary": "Clear a task for rerun.",
+        "requestBody": {
+          "description": "Args for Airflow CLI command [airflow tasks clear].",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clearTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Command execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/commandResult"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": [
+          "Extended API"
+        ]
+      }
+    },
+    "/api/extended/run": {
+      "post": {
+        "summary": "Run a task right now.",
+        "requestBody": {
+          "description": "Args for Airflow CLI command [airflow tasks run].",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/runTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Command execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/commandResult"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": [
+          "Extended API"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "clearTaskRequest": {
+        "required": [
+          "dagName",
+          "endDate",
+          "jobName",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "dagName": {
+            "type": "string",
+            "description": "Name of DAG to clear"
+          },
+          "downstream": {
+            "type": "boolean",
+            "description": "Whether to recursively clear downstream tasks"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End of the time range for task instance to clear"
+          },
+          "jobName": {
+            "type": "string",
+            "description": "Regex of operator to clear"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start of the time range for task instance to clear"
+          },
+          "username": {
+            "type": "string",
+            "default": "Extended API",
+            "description": "Username who call this API"
+          }
+        }
+      },
+      "runTaskRequest": {
+        "required": [
+          "dagName",
+          "jobName",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "dagName": {
+            "type": "string",
+            "description": "Name of DAG to run"
+          },
+          "jobName": {
+            "type": "string",
+            "description": "Name of operator to run"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start of the time range for task instance to clear"
+          },
+          "username": {
+            "type": "string",
+            "default": "Extended API",
+            "description": "Username who call this API"
+          }
+        }
+      },
+      "commandResult": {
+        "type": "object",
+        "properties": {
+          "executed_command": {
+            "type": "string",
+            "description": "executed airflow CLI command"
+          },
+          "exit_code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "command exit code"
+          },
+          "output_info": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "command execute output as list of string"
+          },
+          "error_info": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "command execute error as list of string"
+          }
+        }
+      }
+    }
+  }
+}
