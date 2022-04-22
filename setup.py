@@ -1,6 +1,6 @@
 from os import path as opath
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 HERE = opath.dirname(__file__)
 VERSION_FILE = opath.join(HERE, 'extended_api', 'VERSION')
@@ -15,7 +15,6 @@ with open(README_FILE, "r") as f:
 setup(
     name="airflow_extended_api",
     version=version,
-    packages=find_packages("extended_api"),
     include_package_data=True,
     entry_points={
         "airflow.plugins": [

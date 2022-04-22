@@ -1,0 +1,2 @@
+recursive-include extended_api *.py *.json
+include requirements.txt
