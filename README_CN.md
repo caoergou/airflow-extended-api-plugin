@@ -31,8 +31,9 @@
 
 2. 重启 Airflow WebServer
 
-3. 打开 Airflow 界面中的 `Docs - Extended API OpenAPI` 或 `http://localhost:8080/` 来查看 API 细节.
-   ![img.png](pics/img.png)
+3. 打开 Airflow 界面中的 `Docs - Extended API OpenAPI` 或 `http://localhost:8080/` 来查看 API 细节。
+
+   ![img.png](https://github.com/caoergou/airflow-extended-api-plugin/raw/main/pics/img.png)
 
 ## 使用 API
 
@@ -119,6 +120,11 @@ curl -X POST --user "airflow:airflow"  http://127.0.0.1:8080/api/extended/clear 
   ]
 }
 ```
+
+## 项目计划
+
+- [ ] 支持 `backfill` 命令
+- [ ] support custom configuration
 
 ## 相关链接
 

@@ -28,7 +28,7 @@ REST-ful API to extend the ability of airflow official API.
 
 ## Plugin Install
 
-1. Install the plugin
+1. Install the plugin via `pip`
 
   ```bash
     pip install airflow-extended-api
@@ -38,7 +38,7 @@ REST-ful API to extend the ability of airflow official API.
 
 3. Open Airflow UI in  `Docs - Extended API OpenAPI` or `http://localhost:8080/` to view extended API details in swagger
    UI.
-   ![img.png](pics/img.png)
+   ![img.png](https://github.com/caoergou/airflow-extended-api-plugin/raw/main/pics/img.png)
 
 ## Usage
 
@@ -123,7 +123,12 @@ curl -X POST --user "airflow:airflow"  http://127.0.0.1:8080/api/extended/clear 
 }
 ```
 
-## links
+## Project Plan
+
+- [ ] support `dags backfill` cli command
+- [ ] support custom configuration
+
+## Links and References
 
 - [Airflow configuration documentation](https://airflow.apache.org/docs/stable/configurations-ref.html)
 - [Airflow CLI command documentation](https://airflow.apache.org/docs/apache-airflow/stable/cli-and-env-variables-ref.html)
