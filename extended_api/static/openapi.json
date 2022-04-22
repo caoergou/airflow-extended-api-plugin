@@ -4,9 +4,14 @@
     "title": "Airflow Extended API Doc",
     "description": "Airflow Extended API, which export airflow CLI command as REST-ful API\nto extend the ability of airflow official API.\n",
     "contact": {
+      "name": "Eric Cao",
       "email": "itsericsmail@gmail.com"
     },
-    "version": "1.1.0"
+    "version": "1.1.1",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   },
   "servers": [
     {
