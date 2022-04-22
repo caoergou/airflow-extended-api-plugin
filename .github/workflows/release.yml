@@ -2,8 +2,8 @@ name: Releases
 
 on:
   push:
-    branches:
-    - main
+    tags:
+      - v*
 
 jobs:
 
@@ -13,10 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.6']
-
-    env:
-      AIRFLOW_HOME: ./scripts/airflow
+        python-version: [ '3.7' ]
 
     steps:
       - name: Checkout code
@@ -44,17 +41,13 @@ jobs:
           python -m pip install --upgrade setuptools wheel
 
       - name: Prepare environment
-        env:
-          AIRFLOW_VERSION: ${{ matrix.airflow }}
-        run: |
-          bash ./scripts/prepare.sh
-          pip freeze
+        run: pip freeze
 
       - name: Build package
-        run:  python setup.py bdist_wheel sdist
+        run: python setup.py bdist_wheel sdist
 
       - name: Check package
-        run:  twine check dist/*
+        run: twine check dist/*
 
       - name: Publish package
         env:
@@ -66,7 +59,7 @@ jobs:
   release:
     name: Release version
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [ build ]
 
     steps:
       - name: Create release
