@@ -1,5 +1,6 @@
-# Airflow 插件 - Airflow 拓展 API
+[English Document](https://github.com/caoergou/airflow-extended-api-plugin/blob/main/README.md)
 
+# Airflow 拓展 API 插件
 
 <p align="center">
    <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
@@ -13,99 +14,37 @@
     </a>
 </p>
 
-Airflow 扩展 API, 可将 airflow 的命令行包装成 RESTful 风格的 API，以扩展 Airflow 官方 API 的能力。
+可将 airflow 的命令行包装成 REST-ful 风格 API 的插件，以扩展 Airflow 官方 API 的能力。
 
 ## 特点
 
 - 👏**可用**: 可能是 Github 上唯一一个支持 Airflow 2.x 版本的命令行插件.
-- 🎉**可扩展**: 可根据需要讲任意 Airflow CLI 命令封装成 API.
+- 🎉**可扩展**: 可根据需要将任意 Airflow CLI 命令封装成 API.
 
 ## 安装插件
 
-1. 从以下地址下载插件的 zip 包:
+1. 通过 Pip 安装
 
-```url
-https://github.com/caoergou/airflow-extended-api/archive/master.zip
-```
+  ```bash
+    pip install airflow-extended-api
+  ```
 
-2. 检查 Airflow 配置文件 `airflow.cfg` 中定义的 `Plugins floder`。
+2. 重启 Airflow WebServer
 
-   如果没有设置 airflow 默认插件地址，可以考虑使用默认插件地址 `{AIRFLOW_HOME}/plugins`
-
-3. 解压 ZIP 包, 将解压得到的所有文件移动至插件目录.
-
-```bash
-unzip airflow-extended-api-plugin.zip
-
-cp -r airflow-rest-api-plugin/* {AIRFLOW_PLUGINS_FOLDER}
-```
-
-4. 启动 airflow webserver 与 airflow scheduler.
-
-```bash
-airflow webserver -p 8080
-airflow scheduler
-```
-
-## 目录结构
-
-- **/plugins**
-  - **/extended_api**
-    - **/extended_api.py** - Airflow Extended API 接口目录.
-    - **/utils.py** - API 的 DTO 类与执行命令的功能函数.
-    - **/index.html** - Airflow Extended API 说明的静态界面.
-    - **/openapi.yaml** - 以 OpenAPI 规范定义的 API 说明.
-
-## ⚠️鉴权与安全警告
-
-**为了插件的易用性，插件目前没有任何鉴权！**
-
-因此如果将此 API 直接暴露于公网环境，相当于将命令行权限直接暴露于公网权限，这相当危险。
-
-从安全角度出发，请考虑是否需要保留接口定义函数上的 `@csrf.exempt` 注解。
+3. 打开 Airflow 界面中的 `Docs - Extended API OpenAPI` 或 `http://localhost:8080/` 来查看 API 细节.
+   ![img.png](pics/img.png)
 
 ## 使用 API
 
-- [clear_task](#clear_task)
+### 一般调用示例
 
-### ***<span id="clear_task">clear_task</span>***
-
-##### Description:
-
-- 使用命令行清理任务的执行记录，以便让该任务重跑。
-
-##### Endpoint:
-
-```text
-https://{AIRFLOW_HOST}:{AIRFLOW_PORT}/api/extended/clear
-```
-
-##### Method:
-
-- POST
-
-##### POST request body:
-
-Args for Airflow CLI command `airflow tasks clear`.
-
-| 参数       | 类型               | 说明                                               | Required |
-| ---------- | ------------------ | -------------------------------------------------- | -------- |
-| dagName    | String             | 要清理运行记录的 DAG 名                            | True     |
-| startDate  | <date-time> String | 要清理的任务范围的开始时间                         | True     |
-| endDate    | <date-time> String | 要清理的任务范围的结束时间                         | True     |
-| jobName    | String             | 需要清理的任务的正则表达式                         | True     |
-| downstream | boolean            | 是否需要递归的清理下游任务的执行记录，默认为 False | False    |
-| username   | String             | 调用 API 的用户名                                  | False    |
-
-
-
-##### CURL 调用示例:
+#### curl 请求:
 
 ```bash
-curl -X POST https://localhost:8080/api/extended/clear -H "Content-Type: application/json" -d '{"dagName": "string","downstream": true,"endDate": "2019-08-24T14:15:22Z","jobName": "string","startDate": "2019-08-24T14:15:22Z","username": "Knowhere API"}'
+curl -X POST --user "airflow:airflow" https://localhost:8080/api/extended/clear -H "Content-Type: application/json" -d '{"dagName": "string","downstream": true,"endDate": "2019-08-24T14:15:22Z","jobName": "string","startDate": "2019-08-24T14:15:22Z","username": "Extended API"}'
 ```
 
-##### 返回结果示例:
+#### 返回结果格式:
 
 ```json
 {
@@ -119,30 +58,79 @@ curl -X POST https://localhost:8080/api/extended/clear -H "Content-Type: applica
   ]
 }
 ```
-## 项目状态
 
-<p align="center">
-   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
-      <img src="https://img.shields.io/github/stars/caoergou/airflow-extended-api-plugin"/>
-    </a>
-   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
-      <img src="https://img.shields.io/github/forks/caoergou/airflow-extended-api-plugin"/>
-    </a>
-   <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
-      <img src="https://img.shields.io/github/watchers/caoergou/airflow-extended-api-plugin"/>
-    </a>
-    <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
-      <img src="https://img.shields.io/github/languages/code-size/caoergou/airflow-extended-api-plugin"/>
-    </a>
-</p>
+### 身份验证
 
-**TODO**
+#### 不带身份信息的 curl 请求
 
-- [ ] 增加 API 的鉴权能力.
-- [ ] 使得 API 能够自动生成文档.
-- [ ] 提交指 PyPi 仓库使得能够自动下载.
+请以`--user "{username}:{password}"`的样式提供 airflow 账户信息，否则将鉴权失败。
+
+```bash
+curl -X POST http://127.0.0.1:8080/api/extended/clear -H "Content-Type: application/json" -d '{"dagName": "string","downstream": true,"endDate": "2019-08-24T14:15:22Z","jobName": "string","startDate": "2019-08-24T14:15:22Z","username": "Extended API"}'
+```
+
+### 返回结果
+
+```json
+{
+  "detail": null,
+  "status": 401,
+  "title": "Unauthorized",
+  "type": "https://airflow.apache.org/docs/apache-airflow/2.2.5/stable-rest-api-ref.html#section/Errors/Unauthenticated"
+}
+```
+
+### 错误的命令行
+
+#### curl 请求
+
+```bash
+curl -X POST --user "airflow:airflow"  http://127.0.0.1:8080/api/extended/clear -H "Content-Type: application/json" -d '{"dagName": "string","downstream": true,"endDate": "2019-08-24T14:15:22Z","jobName": "string","startDate": "2019-08-24T14:15:22Z","username": "Extended API"}'
+```
+
+### 返回结果
+
+```json
+{
+  "error_info": [
+    "Traceback (most recent call last):",
+    "  File \"/home/airflow/.local/bin/airflow\", line 8, in <module>",
+    "    sys.exit(main())",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/__main__.py\", line 48, in main",
+    "    args.func(args)",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/cli/cli_parser.py\", line 48, in command",
+    "    return func(*args, **kwargs)",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/utils/cli.py\", line 92, in wrapper",
+    "    return f(*args, **kwargs)",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/cli/commands/task_command.py\", line 506, in task_clear",
+    "    dags = get_dags(args.subdir, args.dag_id, use_regex=args.dag_regex)",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/utils/cli.py\", line 203, in get_dags",
+    "    return [get_dag(subdir, dag_id)]",
+    "  File \"/home/airflow/.local/lib/python3.7/site-packages/airflow/utils/cli.py\", line 193, in get_dag",
+    "    f\"Dag {dag_id!r} could not be found; either it does not exist or it failed to parse.\"",
+    "airflow.exceptions.AirflowException: Dag 'string' could not be found; either it does not exist or it failed to parse.",
+    ""
+  ],
+  "executed_command": "airflow tasks clear string -e 2019-08-24T14:15:22+00:00 -s 2019-08-24T14:15:22+00:00 -t string -y -d",
+  "exit_code": 1,
+  "output_info": [
+    "[\u001b[34m2022-04-22 10:05:50,538\u001b[0m] {\u001b[34mdagbag.py:\u001b[0m500} INFO\u001b[0m - Filling up the DagBag from /opt/airflow/dags\u001b[0m",
+    ""
+  ]
+}
+```
 
 ## 相关链接
 
 - [Airflow 配置文档](https://airflow.apache.org/docs/stable/configurations-ref.html)
-- 联系邮箱 `caofuguo@iftech.io`
+- [Airflow 命令行工具](https://airflow.apache.org/docs/apache-airflow/stable/cli-and-env-variables-ref.html)
+- 开发过程中参考了以下项目，在此表示感谢
+    - [andreax79/airflow-code-editor](https://github.com/andreax79/airflow-code-editor)
+    - [airflow-plugins/airflow_api_plugin](https://github.com/airflow-plugins/airflow_api_plugin)
+- 联系邮箱 Eric Cao `itsericsmail@gmail.com`
+
+<p align="center">
+  <a href="https://github.com/caoergou/airflow-extended-api-plugin/">
+  <img src="https://img.shields.io/github/license/caoergou/airflow-extended-api-plugin?logo=apache"/>
+  </a>
+</p>
