@@ -1,0 +1,6 @@
+/dist/*
+/build/*
+/docker-compose.yaml
+/airflow_extended_api.egg-info/*
+/Dockerfile
+/venv/*
