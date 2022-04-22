@@ -1,0 +1,6 @@
+/build/*
+/.idea/*
+/dist/*
+/airflow_extended_api.egg-info/*
+/docker-compose.yaml
+/Dockerfile
