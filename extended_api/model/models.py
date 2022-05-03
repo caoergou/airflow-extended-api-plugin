@@ -78,8 +78,8 @@ class BackfillDAGRunRequestSchema(Schema):
         start_date_str_UTC: str = data['start_date'].isoformat()
         end_date_str_UTC: str = data['end_date'].isoformat()
         command_list = ['airflow', 'dags', 'backfill', data['dag_name'],
-                        "-e", end_date_str_UTC,
                         "-s", start_date_str_UTC,
+                        "-e", end_date_str_UTC,
                         "-t", data['job_name'],
                         "-y"]
 
