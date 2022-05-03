@@ -16,10 +16,15 @@
 
 可将 airflow 的命令行包装成 REST-ful 风格 API 的插件，以扩展 Airflow 官方 API 的能力。
 
-## 特点
+该插件可用于 Airflow 2.0 以上版本，且易于扩展，你可以根据需要修改代码，将任意 CLI 命令封装成 API。
 
-- 👏**可用**: 可能是 Github 上唯一一个支持 Airflow 2.x 版本的命令行插件.
-- 🎉**可扩展**: 可根据需要将任意 Airflow CLI 命令封装成 API.
+## 当前支持的命令
+
+当前支持使用以下命令：
+
+- `airflow dags backfill`
+- `airflow tasks run`
+- `airflow tasks clear`
 
 ## 安装插件
 

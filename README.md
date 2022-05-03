@@ -21,10 +21,16 @@ Airflow Extended API, which
 export [airflow CLI command](https://airflow.apache.org/docs/apache-airflow/2.0.2/cli-and-env-variables-ref.html) as
 REST-ful API to extend the ability of airflow official API.
 
-## Features
+This plugin is available for airflow 2.x Version and extensible, as you can easily define your own API to execute any
+Airflow CLI command so that it fits your demand.
 
-- 👏**Available**: Probably the only available CLI command plugin on Github that **supports the Airflow 2.x version**.
-- 🎉**Extensible**: Easily define your own API to execute any Airflow CLI command so that it fits your demand.
+## Current Supported Commands
+
+The following commands are supported now, and more is coming.
+
+- `airflow dags backfill`
+- `airflow tasks run`
+- `airflow tasks clear`
 
 ## Plugin Install
 
@@ -125,7 +131,6 @@ curl -X POST --user "airflow:airflow"  http://127.0.0.1:8080/api/extended/clear 
 
 ## Project Plan
 
-- [ ] support `dags backfill` cli command
 - [ ] support custom configuration
 
 ## Links and References
