@@ -47,6 +47,12 @@ try:
         def run(self):
             return self._run()
 
+        @expose("/backfill", methods=["POST"])
+        @csrf.exempt
+        @security.requires_access(PERMISSIONS)
+        def backfill(self):
+            return self._backfill()
+
 except (ImportError, ModuleNotFoundError):
     # AppBuilder (Airflow >= 1.10 < 2.0)
     from airflow.www_rbac.decorators import has_dag_access
@@ -76,6 +82,12 @@ except (ImportError, ModuleNotFoundError):
         @has_dag_access
         def run(self):
             return self._run()
+
+        @expose("/backfill", methods=["POST"])
+        @csrf.exempt
+        @has_dag_access
+        def backfill(self):
+            return self._backfill()
 
 extended_api_view = PluginExtendedAPIView()
 

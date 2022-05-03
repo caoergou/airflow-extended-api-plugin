@@ -7,7 +7,7 @@
       "name": "Eric Cao",
       "email": "itsericsmail@gmail.com"
     },
-    "version": "1.1.2",
+    "version": "1.1.3",
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
@@ -92,6 +92,40 @@
           "Extended API"
         ]
       }
+    },
+    "/api/extended/backfill": {
+      "post": {
+        "summary": "Backfill a task right now.",
+        "requestBody": {
+          "description": "Args for Airflow CLI command [airflow dags backfill].",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/backfillDAGRunRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Command execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/commandResult"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": [
+          "Extended API"
+        ]
+      }
     }
   },
   "components": {
@@ -126,6 +160,52 @@
             "type": "string",
             "format": "date-time",
             "description": "Start of the time range for task instance to clear"
+          },
+          "username": {
+            "type": "string",
+            "default": "Extended API",
+            "description": "Username who call this API"
+          }
+        }
+      },
+      "backfillDAGRunRequest": {
+        "required": [
+          "dagName",
+          "jobName",
+          "startDate",
+          "endDate"
+        ],
+        "type": "object",
+        "properties": {
+          "dagName": {
+            "type": "string",
+            "description": "Name of DAG to clear"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start of the time range for task instance to clear"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End of the time range for task instance to clear"
+          },
+          "jobName": {
+            "type": "string",
+            "description": "Regex of operator to clear"
+          },
+          "pool": {
+            "type": "string",
+            "description": "Resource pool to use"
+          },
+          "rerunFailedTasks": {
+            "type": "boolean",
+            "description": "if set, the backfill will auto-rerun all the failed tasks for the backfill date range instead of throwing exceptions"
+          },
+          "ignoreDependencies": {
+            "type": "boolean",
+            "description": "if set, the backfill will delete existing backfill-related DAG runs and start anew with fresh, running DAG runs"
           },
           "username": {
             "type": "string",

@@ -5,7 +5,7 @@ from flask import request, redirect, url_for, send_file
 from marshmallow import ValidationError
 
 from extended_api.constants import PLUGIN_STATIC_DIR_PATH
-from extended_api.model.models import commandExecutionResult, clearTaskSchema, runTaskSchema
+from extended_api.model.models import commandExecutionResult, clearTaskSchema, runTaskSchema, backfillDAGRunSchema
 from extended_api.service.executor import execute_cli_command
 
 log = logging.getLogger(__name__)
@@ -27,6 +27,18 @@ class APIService(object):
         body = request.get_json()
         try:
             command_list, username = clearTaskSchema.load(body)
+        except ValidationError as err:
+            raise BadRequest(detail=str(err.messages))
+
+        output = execute_cli_command(command_list, username)
+        return commandExecutionResult.load(output)
+
+    def _backfill(self):
+        log.info("Extended API backfill called")
+
+        body = request.get_json()
+        try:
+            command_list, username = backfillDAGRunSchema.load(body)
         except ValidationError as err:
             raise BadRequest(detail=str(err.messages))
 
