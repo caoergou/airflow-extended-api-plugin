@@ -108,15 +108,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Command execution result.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/commandResult"
-                }
-              }
-            }
+          "202": {
+            "description": "Backfill operation started."
           },
           "405": {
             "description": "Invalid input"
@@ -201,16 +194,28 @@
           },
           "rerunFailedTasks": {
             "type": "boolean",
-            "description": "if set, the backfill will auto-rerun all the failed tasks for the backfill date range instead of throwing exceptions"
+            "description": "If set, the backfill will auto-rerun all the failed tasks for the backfill date range instead of throwing exceptions"
           },
           "ignoreDependencies": {
             "type": "boolean",
-            "description": "if set, the backfill will delete existing backfill-related DAG runs and start anew with fresh, running DAG runs"
+            "description": "Skip upstream tasks, run only the tasks matching the regexp. Only works in conjunction with task_regex"
           },
           "username": {
             "type": "string",
             "default": "Extended API",
             "description": "Username who call this API"
+          },
+          "continueOnFailures": {
+            "type": "boolean",
+            "description": "If set, the backfill will keep going even if some of the tasks failed"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "If set, perform a dry run for each task. Only renders Template Fields for each task, nothing else"
+          },
+          "runBackwards": {
+            "type": "boolean",
+            "description": "If set, the backfill will run tasks from the most recent day first. if there are tasks that depend_on_past this option will throw an exception"
           }
         }
       },

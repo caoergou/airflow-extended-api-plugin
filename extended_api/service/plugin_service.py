@@ -1,4 +1,5 @@
 import logging
+import threading
 
 from airflow.api_connexion.exceptions import BadRequest
 from flask import request, redirect, url_for, send_file
@@ -42,8 +43,15 @@ class APIService(object):
         except ValidationError as err:
             raise BadRequest(detail=str(err.messages))
 
-        output = execute_cli_command(command_list, username)
-        return commandExecutionResult.load(output)
+        # For backfilling: API will get 504 Gateway Time-out due to taking time to finish
+        # output = execute_cli_command(command_list, username)
+        # result = commandExecutionResult.load(output)
+
+        # Instead of returning backfill result. Return immediately that operation continue in the background
+        thread = threading.Thread(target=execute_cli_command, args=(command_list, username))
+        thread.start()
+
+        return {"message": "Backfill operation started"}, 202
 
     def _run(self):
         log.info("Extended API run called")
