@@ -68,10 +68,14 @@ class BackfillDAGRunRequestSchema(Schema):
     start_date = fields.DateTime(data_key="startDate", required=True)
     end_date = fields.DateTime(data_key="endDate", required=True)
     job_name = fields.String(data_key="jobName", required=True)
+
     pool = fields.String(data_key="pool", required=False)
     rerun_failed_tasks = fields.Boolean(data_key="rerunFailedTasks", required=False)
     ignore_dependencies = fields.Boolean(data_key="ignoreDependencies", required=False)
     username = fields.String(data_key="username", required=False, default="Extended API")
+    continue_on_failures = fields.Boolean(data_key="continueOnFailures", required=False)
+    dry_run = fields.Boolean(data_key="dryRun", required=False)
+    run_backwards = fields.Boolean(data_key="runBackwards", required=False)
 
     @post_load
     def gen_command_list(self, data, **kwargs) -> Tuple[List[str], str]:
@@ -87,9 +91,19 @@ class BackfillDAGRunRequestSchema(Schema):
             command_list += ['--pool', data['pool']]
 
         if data.get("rerun_failed_tasks"):
-            command_list.append('--ignore-first-depends-on-past')
+            command_list.append('--rerun-failed-tasks')
+
         if data.get("ignore_dependencies"):
             command_list.append('--ignore-dependencies')
+
+        if data.get("continue_on_failures"):
+            command_list += ['--continue-on-failures']
+
+        if data.get("dry_run"):
+            command_list += ['--dry-run']
+
+        if data.get("run_backwards"):
+            command_list.append('--run-backwards')
 
         return command_list, data['username']
 
